@@ -10,7 +10,11 @@
   "license": "ISC",
   "main": "lib/index.js",
   "keywords": [
-    "plur", "logic", "plurivalent", "multi-valent", "boolean"
+    "plur",
+    "logic",
+    "plurivalent",
+    "multi-valent",
+    "boolean"
   ],
   "engines": {
     "node": ">=0.10"
@@ -61,5 +65,8 @@
     "standard": "^8.3.0",
     "tap": "^7.1.2",
     "tap-mocha-reporter": "^3.0.0"
+  },
+  "dependencies": {
+    "jasmine": "^2.5.2"
   }
 }

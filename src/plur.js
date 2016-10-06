@@ -10,15 +10,6 @@ module.exports = function plur() {
   var _Cipher = [_Nil, _Nil];
   var _Ineffable = [NaN, NaN];
 
-  function compact(_array) {
-    // TODO: fix efficiency.
-    return _array.filter( (item, pos, self) => self.indexOf(item) == pos );
-  };
-
-  function makeResult(_result) {
-    return _PlurFactory(compact(_result).sort( (a, b) => a < b ));
-  };
-
   function _PlurFactory (_value) {
     return {
 
@@ -26,59 +17,58 @@ module.exports = function plur() {
 
       and: function(_operand) {
              // TODO: Validate _operand.
-             var result = [
-               (this.value[0] && _operand.value[0]) && (this.value[0] && _operand.value[1]),
-               (this.value[0] && _operand.value[0]) && (this.value[1] && _operand.value[1]),
-               (this.value[1] && _operand.value[0]) && (this.value[0] && _operand.value[1]),
-               (this.value[1] && _operand.value[0]) && (this.value[1] && _operand.value[1])
-             ];
+             var result = new Set();
 
-             return makeResult(result);
+             for (let item of this.value)
+               for (let oper of _operand.value)
+                 result.add(item && oper);
+
+             return _PlurFactory(result);
+
            },
 
       or:  function(_operand) {
              // TODO: Validate _operand.
-             var result = [
-               (this.value[0] || _operand.value[0]) && (this.value[0] || _operand.value[1]),
-               (this.value[0] || _operand.value[0]) && (this.value[1] || _operand.value[1]),
-               (this.value[1] || _operand.value[0]) && (this.value[0] || _operand.value[1]),
-               (this.value[1] || _operand.value[0]) && (this.value[1] || _operand.value[1])
-             ];
+             var result = new Set();
 
-             return makeResult(result);
+             for (let item of this.value)
+               for (let oper of _operand.value)
+                 result.add(item || oper);
+
+             return _PlurFactory(result);
            },
 
       not: function() {
-             // TODO: Validate _operand.
-             var result = [!this.value[0], !this.value[1]];
-             return makeResult(result);
+             var result = [];
+             for (let item of this.value) result.push(!item);
+             return _PlurFactory(new Set(result));
            }
     };
   };
 
   return {
     True: function True() {
-      return _PlurFactory(_True);
+      return _PlurFactory(new Set(_True));
     },
 
     False: function False() {
-      return _PlurFactory(_False);
+      return _PlurFactory(new Set(_False));
     },
 
     Paradox: function Paradox() {
-      return _PlurFactory(_Paradox);
+      return _PlurFactory(new Set(_Paradox));
     },
 
     Empty: function Empty() {
-      return _PlurFactory(_Empty);
+      return _PlurFactory(new Set(_Empty));
     },
 
     Ineffable: function Ineffable() {
-      return _PlurFactory(_Ineffable);
+      return _PlurFactory(new Set(_Ineffable));
     },
 
     Cipher: function Cipher() {
-      return _PlurFactory(_Cipher);
+      return _PlurFactory(new Set(_Cipher));
     }
   };
 
