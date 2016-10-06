@@ -80,10 +80,18 @@ describe("The plurivalent logic test suite", function() {
     expect(Paradox.and(True).value.has(true)).toBe(true);
     expect(Paradox.and(True).value.has(false)).toBe(true);
 
-    expect(True.and(Empty).value.size).toBe(1);
-    expect(True.and(Empty).value.has(true)).toBe(true);
-    expect(Empty.and(True).value.size).toBe(1);
-    expect(Empty.and(True).value.has(true)).toBe(true);
+    expect(True.and(Empty).value.size).toBe(0);
+    expect(Empty.and(True).value.size).toBe(0);
+
+    expect(True.and(Cipher).value.size).toBe(1);
+    expect(True.and(Cipher).value.has(0)).toBe(true);
+    expect(Cipher.and(True).value.size).toBe(1);
+    expect(Cipher.and(True).value.has(0)).toBe(true);
+
+    expect(True.and(Ineffable).value.size).toBe(1);
+    expect(True.and(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.and(True).value.size).toBe(1);
+    expect(Ineffable.and(True).value.has(NaN)).toBe(true);
   });
 
 });
