@@ -1,6 +1,6 @@
 # plur [![version][npm-version]][npm-url] [![License][npm-license]][license-url]
 
-> A plurivalent logic engine.
+> A plurivalent logic engine inspired by ["Beyond true and false"](https://aeon.co/essays/the-logic-of-buddhist-philosophy-goes-beyond-simple-truth).
 
 [![Build Status][travis-image]][travis-url]
 [![Downloads][npm-downloads]][npm-url]
