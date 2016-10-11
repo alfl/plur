@@ -19,9 +19,19 @@ module.exports = function plur() {
              // TODO: Validate _operand.
              var result = new Set();
 
-             for (let item of this.value)
-               for (let oper of _operand.value)
-                 result.add(item && oper);
+             for (let item of this.value) {
+               for (let oper of _operand.value) {
+                 // TODO: Yup, using NaN was a bad idea.
+                 if (Number.isNaN(item) || Number.isNaN(oper)) {
+                   result.add(NaN);
+                 } else if ((item === 0 || oper === 0) && (item === false || oper === false)) {
+                   // TODO: This is a gross edge case for False && Cipher.
+                   result.add(0);
+                 } else {
+                   result.add(item && oper);
+                 }
+               }
+             }
 
              return _PlurFactory(result);
 
@@ -36,6 +46,9 @@ module.exports = function plur() {
                  // TODO: Yup, using NaN was a bad idea.
                  if (Number.isNaN(item) || Number.isNaN(oper)) {
                    result.add(NaN);
+                 } else if ((item === 0 || oper === 0) && (item === false || oper === false)) {
+                   // TODO: This is a gross edge case for False || Cipher.
+                   result.add(0);
                  } else {
                    result.add(item || oper);
                  }
@@ -53,9 +66,12 @@ module.exports = function plur() {
       not: function() {
              var result = [];
 
-             // TODO: Research: is the complement of the empty set the full grammar?
+             // TODO: Gross special cases for Paradox and Empty.
+             // Needs more elegance!
              if (this.value.size === 0) {
                result = _Paradox;
+             } else if (this.value.size === 2) {
+               result = _Empty;
              } else {
                for (let item of this.value) {
                  // TODO: NaN is bad.
