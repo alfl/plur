@@ -16,26 +16,28 @@ npm install --production --save plur
 
 ## Usage
 
-I reccomend using an optimized build matching your Node.js environment version, otherwise, the standard `require` would work just fine.
+Other versions coming, for now just require. See tests.
 
 ```js
 /*
  * Node 6
  * Built using `babel-preset-es2015-node6`
  */
-const plur = require('plur/lib/node6')
+//const plur = require('plur/lib/node6')
 
 /*
  * Node 5
  * Built using `babel-preset-es2015-node5`
  */
-const plur = require('plur/lib/node5')
+//const plur = require('plur/lib/node5')
 
 /*
  * Node 4
  * Built using `babel-preset-es2015-node4`
  */
-const plur = require('plur/lib/node4')
+//const plur = require('plur/lib/node4')
+
+# Just use this guy:
 
 /*
  * Node >=0.10 <=0.12
@@ -52,9 +54,10 @@ var plur = require('plur')
 ### plur()
 
 ```js
-import plur from 'plur'
-
-plur()
+// See unit tests. This is wrong.
+//import plur from 'plur'
+//
+//plur()
 ```
 
 ----
