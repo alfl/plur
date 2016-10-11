@@ -37,8 +37,6 @@ Other versions coming, for now just require. See tests.
  */
 //const plur = require('plur/lib/node4')
 
-# Just use this guy:
-
 /*
  * Node >=0.10 <=0.12
  * Built using `babel-preset-es2015`
@@ -46,6 +44,11 @@ Other versions coming, for now just require. See tests.
  *   - additional package is required: `babel-runtime`
  *   - npm install --production --save babel-runtime
  */
+
+//
+// JUST USE THIS GUY:
+//
+
 var plur = require('plur')
 ```
 
