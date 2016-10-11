@@ -94,6 +94,74 @@ describe("The plurivalent logic test suite", function() {
     expect(Ineffable.and(True).value.has(NaN)).toBe(true);
   });
 
+  it("can validate OR operations against TRUE", function() {
+    var True = plur.True();
+    var False = plur.False();
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(True.or(True).value.size).toBe(1);
+    expect(True.or(True).value.has(true)).toBe(true);
+
+    expect(True.or(False).value.size).toBe(1);
+    expect(True.or(False).value.has(true)).toBe(true);
+    expect(False.or(True).value.size).toBe(1);
+    expect(False.or(True).value.has(true)).toBe(true);
+
+    expect(True.or(Paradox).value.size).toBe(1);
+    expect(True.or(Paradox).value.has(true)).toBe(true);
+    expect(Paradox.or(True).value.size).toBe(1);
+    expect(Paradox.or(True).value.has(true)).toBe(true);
+
+    expect(True.or(Empty).value.size).toBe(1);
+    expect(True.or(Empty).value.has(true)).toBe(true);
+    expect(Empty.or(True).value.size).toBe(1);
+    expect(Empty.or(True).value.has(true)).toBe(true);
+
+    expect(True.or(Cipher).value.size).toBe(1);
+    expect(True.or(Cipher).value.has(true)).toBe(true);
+    expect(Cipher.or(True).value.size).toBe(1);
+    expect(Cipher.or(True).value.has(true)).toBe(true);
+
+    expect(True.or(Ineffable).value.size).toBe(1);
+    expect(True.or(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.or(True).value.size).toBe(1);
+    expect(Ineffable.or(True).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate NOT operations", function() {
+    var True = plur.True();
+    var False = plur.False();
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(True.not().value.size).toBe(1);
+    expect(True.not().value.has(false)).toBe(true);
+
+    expect(False.not().value.size).toBe(1);
+    expect(False.not().value.has(true)).toBe(true);
+
+    expect(Paradox.not().value.size).toBe(2);
+    expect(Paradox.not().value.has(true)).toBe(true);
+    expect(Paradox.not().value.has(false)).toBe(true);
+
+    // TODO: Is Paradox the complement of Empty? Seems like a good guess.
+    // But then Paradox.not() == Paradox, instead of Empty, so it seems to
+    // break some kind of symmetry.
+    expect(Empty.not().value.size).toBe(2);
+    expect(Empty.not().value.has(true)).toBe(true);
+    expect(Empty.not().value.has(false)).toBe(true);
+
+    expect(Cipher.not().value.size).toBe(1);
+    expect(Cipher.not().value.has(true)).toBe(true);
+
+    expect(Ineffable.not().value.size).toBe(1);
+    expect(Ineffable.not().value.has(NaN)).toBe(true);
+  });
 });
 
 /*

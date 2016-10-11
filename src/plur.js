@@ -31,16 +31,41 @@ module.exports = function plur() {
              // TODO: Validate _operand.
              var result = new Set();
 
-             for (let item of this.value)
-               for (let oper of _operand.value)
-                 result.add(item || oper);
+             for (let item of this.value) {
+               for (let oper of _operand.value) {
+                 // TODO: Yup, using NaN was a bad idea.
+                 if (Number.isNaN(item) || Number.isNaN(oper)) {
+                   result.add(NaN);
+                 } else {
+                   result.add(item || oper);
+                 }
+               }
+             }
+
+             // Edge case? Treat as set union.
+             if (result.size === 0) {
+               result = new Set([...this.value, ..._operand.value]);
+             }
 
              return _PlurFactory(result);
            },
 
       not: function() {
              var result = [];
-             for (let item of this.value) result.push(!item);
+
+             // TODO: Research: is the complement of the empty set the full grammar?
+             if (this.value.size === 0) {
+               result = _Paradox;
+             } else {
+               for (let item of this.value) {
+                 // TODO: NaN is bad.
+                 if (Number.isNaN(item)) {
+                   result.push(NaN);
+                 } else {
+                   result.push(!item);
+                 }
+               }
+             }
              return _PlurFactory(new Set(result));
            }
     };
