@@ -151,7 +151,7 @@ describe("The plurivalent logic test suite", function() {
 
     // TODO: Is Paradox the complement of Empty? Seems like a good guess.
     // But then Paradox.not() == Paradox, instead of Empty, so it seems to
-    // break some kind of symmetry.
+    // break some kind of symmetry. Maybe Paradox.not() == Empty.
     expect(Empty.not().value.size).toBe(2);
     expect(Empty.not().value.has(true)).toBe(true);
     expect(Empty.not().value.has(false)).toBe(true);
@@ -165,10 +165,6 @@ describe("The plurivalent logic test suite", function() {
 });
 
 /*
-var and1 = True.and(True);
-console.log('Expect true:');
-for (let item of and1.value) console.log(item);
-
 var and2 = True.and(False);
 console.log('Expect false:');
 for (let item of and2.value) console.log(item);
@@ -188,10 +184,6 @@ for (let item of and5.value) console.log(item);
 var and6 = True.and(Ineffable);
 console.log('Expect NaN:');
 for (let item of and6.value) console.log(item);
-
-var or1 = True.or(True);
-console.log('Expect true:');
-for (let item of or1.value) console.log(item);
 
 var or2 = True.or(False);
 console.log('Expect true:');
@@ -213,12 +205,4 @@ var or6 = True.or(Ineffable);
 console.log('Expect NaN:');
 for (let item of or6.value) console.log(item);
 
-var not1 = True.not(True);
-var not2 = True.not(False);
-var not3 = True.not(Paradox);
-var not4 = True.not(Empty);
-var not5 = True.not(Cipher);
-var not6 = True.not(Ineffable);
-
-console.log('done');
-debugger;*/
+*/
