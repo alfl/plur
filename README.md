@@ -46,7 +46,7 @@ Other versions coming, for now just require. See tests.
  */
 
 //
-// JUST USE THIS GUY:
+// JUST USE THIS:
 //
 
 var plur = require('plur')
