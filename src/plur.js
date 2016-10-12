@@ -26,10 +26,20 @@ module.exports = function plur() {
                    result.add(NaN);
                  } else if ((item === 0 || oper === 0) && (item === false || oper === false)) {
                    // TODO: This is a gross edge case for False && Cipher.
-                   result.add(0);
+                   result.add(false);
+                 } else if ((item === 0 || oper === 0) && (item === true || oper === true)) {
+                   // TODO: This is a gross edge case for Paradox && Cipher.
+                   result.add(false);
                  } else {
                    result.add(item && oper);
                  }
+               }
+             }
+
+             // Edge case: figure out if we should NaN this...
+             if (result.size === 0) {
+               if (this.value.has(NaN) || _operand.value.has(NaN)) {
+                 result.add(NaN);
                }
              }
 
@@ -48,7 +58,7 @@ module.exports = function plur() {
                    result.add(NaN);
                  } else if ((item === 0 || oper === 0) && (item === false || oper === false)) {
                    // TODO: This is a gross edge case for False || Cipher.
-                   result.add(0);
+                   result.add(false);
                  } else {
                    result.add(item || oper);
                  }

@@ -84,9 +84,9 @@ describe("The plurivalent logic test suite", function() {
     expect(Empty.and(True).value.size).toBe(0);
 
     expect(True.and(Cipher).value.size).toBe(1);
-    expect(True.and(Cipher).value.has(0)).toBe(true);
+    expect(True.and(Cipher).value.has(false)).toBe(true);
     expect(Cipher.and(True).value.size).toBe(1);
-    expect(Cipher.and(True).value.has(0)).toBe(true);
+    expect(Cipher.and(True).value.has(false)).toBe(true);
 
     expect(True.and(Ineffable).value.size).toBe(1);
     expect(True.and(Ineffable).value.has(NaN)).toBe(true);
@@ -132,7 +132,6 @@ describe("The plurivalent logic test suite", function() {
   });
 
   it("can validate AND operations against FALSE", function() {
-    var True = plur.True();
     var False = plur.False();
     var Paradox = plur.Paradox();
     var Empty = plur.Empty();
@@ -151,9 +150,9 @@ describe("The plurivalent logic test suite", function() {
     expect(Empty.and(False).value.size).toBe(0);
 
     expect(False.and(Cipher).value.size).toBe(1);
-    expect(False.and(Cipher).value.has(0)).toBe(true);
+    expect(False.and(Cipher).value.has(false)).toBe(true);
     expect(Cipher.and(False).value.size).toBe(1);
-    expect(Cipher.and(False).value.has(0)).toBe(true);
+    expect(Cipher.and(False).value.has(false)).toBe(true);
 
     expect(False.and(Ineffable).value.size).toBe(1);
     expect(False.and(Ineffable).value.has(NaN)).toBe(true);
@@ -162,7 +161,6 @@ describe("The plurivalent logic test suite", function() {
   });
 
   it("can validate OR operations against FALSE", function() {
-    var True = plur.True();
     var False = plur.False();
     var Paradox = plur.Paradox();
     var Empty = plur.Empty();
@@ -185,14 +183,144 @@ describe("The plurivalent logic test suite", function() {
     expect(Empty.or(False).value.has(false)).toBe(true);
 
     expect(False.or(Cipher).value.size).toBe(1);
-    expect(False.or(Cipher).value.has(0)).toBe(true);
+    expect(False.or(Cipher).value.has(false)).toBe(true);
     expect(Cipher.or(False).value.size).toBe(1);
-    expect(Cipher.or(False).value.has(0)).toBe(true);
+    expect(Cipher.or(False).value.has(false)).toBe(true);
 
     expect(False.or(Ineffable).value.size).toBe(1);
     expect(False.or(Ineffable).value.has(NaN)).toBe(true);
     expect(Ineffable.or(False).value.size).toBe(1);
     expect(Ineffable.or(False).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate AND operations against PARADOX", function() {
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Paradox.and(Paradox).value.size).toBe(2);
+    expect(Paradox.and(Paradox).value.has(true)).toBe(true);
+    expect(Paradox.and(Paradox).value.has(false)).toBe(true);
+
+    expect(Paradox.and(Empty).value.size).toBe(0);
+    expect(Empty.and(Paradox).value.size).toBe(0);
+
+    expect(Paradox.and(Cipher).value.size).toBe(1);
+    expect(Paradox.and(Cipher).value.has(false)).toBe(true);
+    expect(Cipher.and(Paradox).value.size).toBe(1);
+    expect(Cipher.and(Paradox).value.has(false)).toBe(true);
+
+    expect(Paradox.and(Ineffable).value.size).toBe(1);
+    expect(Paradox.and(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.and(Paradox).value.size).toBe(1);
+    expect(Ineffable.and(Paradox).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate OR operations against PARADOX", function() {
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Paradox.or(Paradox).value.size).toBe(2);
+    expect(Paradox.or(Paradox).value.has(true)).toBe(true);
+    expect(Paradox.or(Paradox).value.has(false)).toBe(true);
+
+    expect(Paradox.or(Empty).value.size).toBe(2);
+    expect(Paradox.or(Empty).value.has(true)).toBe(true);
+    expect(Paradox.or(Empty).value.has(false)).toBe(true);
+    expect(Empty.or(Paradox).value.size).toBe(2);
+    expect(Empty.or(Paradox).value.has(true)).toBe(true);
+    expect(Empty.or(Paradox).value.has(false)).toBe(true);
+
+    expect(Paradox.or(Cipher).value.size).toBe(2);
+    expect(Paradox.or(Cipher).value.has(true)).toBe(true);
+    expect(Paradox.or(Cipher).value.has(false)).toBe(true);
+    expect(Cipher.or(Paradox).value.size).toBe(2);
+    expect(Cipher.or(Paradox).value.has(true)).toBe(true);
+    expect(Cipher.or(Paradox).value.has(false)).toBe(true);
+
+    expect(Paradox.or(Ineffable).value.size).toBe(1);
+    expect(Paradox.or(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.or(Paradox).value.size).toBe(1);
+    expect(Ineffable.or(Paradox).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate AND operations against EMPTY", function() {
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Empty.and(Empty).value.size).toBe(0);
+
+    expect(Empty.and(Cipher).value.size).toBe(0);
+    expect(Cipher.and(Empty).value.size).toBe(0);
+
+    expect(Empty.and(Ineffable).value.size).toBe(1);
+    expect(Empty.and(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.and(Empty).value.size).toBe(1);
+    expect(Ineffable.and(Empty).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate OR operations against EMPTY", function() {
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Empty.or(Empty).value.size).toBe(0);
+
+    expect(Empty.or(Cipher).value.size).toBe(1);
+    expect(Empty.or(Cipher).value.has(0)).toBe(true);
+    expect(Cipher.or(Empty).value.size).toBe(1);
+    expect(Cipher.or(Empty).value.has(0)).toBe(true);
+
+    expect(Empty.or(Ineffable).value.size).toBe(1);
+    expect(Empty.or(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.or(Empty).value.size).toBe(1);
+    expect(Ineffable.or(Empty).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate AND operations against CIPHER", function() {
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Cipher.and(Cipher).value.size).toBe(1);
+    expect(Cipher.and(Cipher).value.has(0)).toBe(true);
+
+    expect(Cipher.and(Ineffable).value.size).toBe(1);
+    expect(Cipher.and(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.and(Cipher).value.size).toBe(1);
+    expect(Ineffable.and(Cipher).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate OR operations against CIPHER", function() {
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(Cipher.or(Cipher).value.size).toBe(1);
+    expect(Cipher.or(Cipher).value.has(0)).toBe(true);
+    expect(Cipher.or(Cipher).value.size).toBe(1);
+    expect(Cipher.or(Cipher).value.has(0)).toBe(true);
+
+    expect(Cipher.or(Ineffable).value.size).toBe(1);
+    expect(Cipher.or(Ineffable).value.has(NaN)).toBe(true);
+    expect(Ineffable.or(Cipher).value.size).toBe(1);
+    expect(Ineffable.or(Cipher).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate AND operations against INEFFABLE", function() {
+    var Ineffable = plur.Ineffable();
+
+    expect(Ineffable.and(Ineffable).value.size).toBe(1);
+    expect(Ineffable.and(Ineffable).value.has(NaN)).toBe(true);
+  });
+
+  it("can validate OR operations against INEFFABLE", function() {
+    var Ineffable = plur.Ineffable();
+
+    expect(Ineffable.or(Ineffable).value.size).toBe(1);
+    expect(Ineffable.or(Ineffable).value.has(NaN)).toBe(true);
   });
 
   it("can validate NOT operations", function() {
@@ -225,45 +353,3 @@ describe("The plurivalent logic test suite", function() {
   });
 });
 
-/*
-var and2 = True.and(False);
-console.log('Expect false:');
-for (let item of and2.value) console.log(item);
-
-var and3 = True.and(Paradox);
-console.log('Expect true, false:');
-for (let item of and3.value) console.log(item);
-
-var and4 = True.and(Empty);
-console.log('Expect nothing:');
-for (let item of and4.value) console.log(item);
-
-var and5 = True.and(Cipher);
-console.log('Expect zero:');
-for (let item of and5.value) console.log(item);
-
-var and6 = True.and(Ineffable);
-console.log('Expect NaN:');
-for (let item of and6.value) console.log(item);
-
-var or2 = True.or(False);
-console.log('Expect true:');
-for (let item of or2.value) console.log(item);
-
-var or3 = True.or(Paradox);
-console.log('Expect true false:');
-for (let item of or3.value) console.log(item);
-
-var or4 = True.or(Empty);
-console.log('Expect true:');
-for (let item of or4.value) console.log(item);
-
-var or5 = True.or(Cipher);
-console.log('Expect true:');
-for (let item of or5.value) console.log(item);
-
-var or6 = True.or(Ineffable);
-console.log('Expect NaN:');
-for (let item of or6.value) console.log(item);
-
-*/
