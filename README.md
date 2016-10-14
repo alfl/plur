@@ -10,23 +10,51 @@
 
 ## Install
 
+Not yet published to npm. Placeholder.
+
 ```bash
 npm install --production --save plur
 ```
 
 ## Usage
 
-Other versions coming, for now use require. See tests.
+Other versions coming. For now use require. The unit tests full exercise the library.
+
+```javascript
+  // TODO: Use your own path until this is on npm.
+  var plur = require('plur')
+
+  var True      = plur.True();
+  var False     = plur.False();
+  var Paradox   = plur.Paradox();
+  var Empty     = plur.Empty();
+  var Ineffable = plur.Ineffable();
+
+  console.log(...True.value.values());                  // true
+  console.log(...False.value.values());                 // false
+  console.log(...Paradox.value.values());               // true false
+  console.log(...Empty.value.values());                 //
+  console.log(...Ineffable.value.values());             // NaN
+
+  // Boolean operations work the same.
+  console.log(...True.and(False).value.values());       // false
+  console.log(...True.or (False).value.values());       // true
+  console.log(...True.not().value.values());            // false
+  // See unit tests for complete truth table.
+
+  // Paradox is "both true and false".
+  // Empty is "neither true nor false".
+  console.log(...Paradox.or (Empty).value.values());    // true false
+  console.log(...Paradox.and(Empty).value.values());    //
+  // See unit tests for complete truth table.
+
+  // Ineffable is "none of the above", "inapplicable".
+  console.log(...Ineffable.and(True).value.values());   // NaN
+  console.log(...Ineffable.or(Paradox).value.values()); // NaN
+  console.log(...Ineffable.and(Empty).value.values());  // NaN
+  // See unit tests for complete truth table.
 
 ```
-var plur = require('plur')
-```
-
-## Usage
-
-### plur()
-
-See unit tests.
 
 ----
 > :copyright: [](alfl.guru) &nbsp;&middot;&nbsp;
