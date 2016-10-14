@@ -18,7 +18,7 @@ npm install --production --save plur
 
 ## Usage
 
-Other versions coming, for now use require. The unit tests full exercise the library.
+Other versions coming. For now use require. The unit tests full exercise the library.
 
 ```javascript
   // TODO: Use your own path until this is on npm.
