@@ -16,52 +16,17 @@ npm install --production --save plur
 
 ## Usage
 
-Other versions coming, for now just require. See tests.
+Other versions coming, for now use require. See tests.
 
-```js
-/*
- * Node 6
- * Built using `babel-preset-es2015-node6`
- */
-//const plur = require('plur/lib/node6')
-
-/*
- * Node 5
- * Built using `babel-preset-es2015-node5`
- */
-//const plur = require('plur/lib/node5')
-
-/*
- * Node 4
- * Built using `babel-preset-es2015-node4`
- */
-//const plur = require('plur/lib/node4')
-
-/*
- * Node >=0.10 <=0.12
- * Built using `babel-preset-es2015`
- * Note: 
- *   - additional package is required: `babel-runtime`
- *   - npm install --production --save babel-runtime
- */
-
-//
-// JUST USE THIS:
-//
-
+```
 var plur = require('plur')
 ```
 
-## API
+## Usage
 
 ### plur()
 
-```js
-// See unit tests. This is wrong.
-//import plur from 'plur'
-//
-//plur()
-```
+See unit tests.
 
 ----
 > :copyright: [](alfl.guru) &nbsp;&middot;&nbsp;
