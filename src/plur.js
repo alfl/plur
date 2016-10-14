@@ -73,6 +73,16 @@ module.exports = function plur() {
              return _PlurFactory(result);
            },
 
+      is:  function(_operand) {
+             // TODO: Validate _operand.
+             // Handle the empty set special case. If the sets differ in size
+             // they cannot be equal. They must either have identical elements,
+             // or be the empty set, to be equal.
+             if (this.value.size !== _operand.value.size) return false;
+             for (let item of this.value.values()) if (!_operand.value.has(item)) return false;
+             return true;
+           },
+
       not: function() {
              var result = [];
 

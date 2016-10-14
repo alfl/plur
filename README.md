@@ -36,6 +36,11 @@ Other versions coming. For now use require. The unit tests full exercise the lib
   console.log(...Empty.value.values());                 //
   console.log(...Ineffable.value.values());             // NaN
 
+  // Test equality with "is". TODO: Better chaining. Currently this
+  // leads to unfortunate constructions such as "True.not().is(False)".
+  console.log(Paradox.is(Paradox));                     // true
+  console.log(Paradox.not().is(Paradox));               // false
+
   // Boolean operations work the same.
   console.log(...True.and(False).value.values());       // false
   console.log(...True.or (False).value.values());       // true
