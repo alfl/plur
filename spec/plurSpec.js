@@ -351,5 +351,33 @@ describe("The plurivalent logic test suite", function() {
     expect(Ineffable.not().value.size).toBe(1);
     expect(Ineffable.not().value.has(NaN)).toBe(true);
   });
+
+  it("can validate IS operations", function() {
+    var True = plur.True();
+    var False = plur.False();
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
+
+    expect(True.is(True)).toBe(true);
+    expect(True.not().is(True)).toBe(false);
+
+    expect(False.is(False)).toBe(true);
+    expect(False.not().is(False)).toBe(false);
+
+    expect(Paradox.is(Paradox)).toBe(true);
+    expect(Paradox.not().is(Paradox)).toBe(false);
+
+    expect(Empty.is(Empty)).toBe(true);
+    expect(Empty.not().is(Empty)).toBe(false);
+
+    expect(Cipher.is(Cipher)).toBe(true);
+    expect(Cipher.not().is(Cipher)).toBe(false);
+
+    // The Ineffable is not Ineffable.
+    expect(Ineffable.is(Ineffable)).toBe(true);
+    expect(Ineffable.not().is(Ineffable)).toBe(true);
+  });
 });
 
