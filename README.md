@@ -24,9 +24,32 @@ var plur = require('plur')
 
 ## Usage
 
-### plur()
+```javascript
+    var True = plur.True();
+    var False = plur.False();
+    var Paradox = plur.Paradox();
+    var Empty = plur.Empty();
+    var Cipher = plur.Cipher();
+    var Ineffable = plur.Ineffable();
 
-See unit tests.
+    expect(True.and(True).value.size).toBe(1);
+    expect(True.and(True).value.has(true)).toBe(true);
+
+    expect(True.and(False).value.size).toBe(1);
+    expect(True.and(False).value.has(false)).toBe(true);
+    expect(False.and(True).value.size).toBe(1);
+    expect(False.and(True).value.has(false)).toBe(true);
+
+    expect(True.and(Paradox).value.size).toBe(2);
+    expect(True.and(Paradox).value.has(true)).toBe(true);
+    expect(True.and(Paradox).value.has(false)).toBe(true);
+    expect(Paradox.and(True).value.size).toBe(2);
+    expect(Paradox.and(True).value.has(true)).toBe(true);
+    expect(Paradox.and(True).value.has(false)).toBe(true);
+
+    expect(True.and(Empty).value.size).toBe(0);
+    expect(Empty.and(True).value.size).toBe(0);
+```
 
 ----
 > :copyright: [](alfl.guru) &nbsp;&middot;&nbsp;
