@@ -10,45 +10,50 @@
 
 ## Install
 
+Not yet published to npm. Placeholder.
+
 ```bash
 npm install --production --save plur
 ```
 
 ## Usage
 
-Other versions coming, for now use require. See tests.
-
-```
-var plur = require('plur')
-```
-
-## Usage
+Other versions coming, for now use require. The unit tests full exercise the library.
 
 ```javascript
-    var True = plur.True();
-    var False = plur.False();
-    var Paradox = plur.Paradox();
-    var Empty = plur.Empty();
-    var Cipher = plur.Cipher();
-    var Ineffable = plur.Ineffable();
+  // TODO: Use your own path until this is on npm.
+  var plur = require('plur')
 
-    expect(True.and(True).value.size).toBe(1);
-    expect(True.and(True).value.has(true)).toBe(true);
+  var True      = plur.True();
+  var False     = plur.False();
+  var Paradox   = plur.Paradox();
+  var Empty     = plur.Empty();
+  var Ineffable = plur.Ineffable();
 
-    expect(True.and(False).value.size).toBe(1);
-    expect(True.and(False).value.has(false)).toBe(true);
-    expect(False.and(True).value.size).toBe(1);
-    expect(False.and(True).value.has(false)).toBe(true);
+  console.log(...True.value.values());                  // true
+  console.log(...False.value.values());                 // false
+  console.log(...Paradox.value.values());               // true false
+  console.log(...Empty.value.values());                 //
+  console.log(...Ineffable.value.values());             // NaN
 
-    expect(True.and(Paradox).value.size).toBe(2);
-    expect(True.and(Paradox).value.has(true)).toBe(true);
-    expect(True.and(Paradox).value.has(false)).toBe(true);
-    expect(Paradox.and(True).value.size).toBe(2);
-    expect(Paradox.and(True).value.has(true)).toBe(true);
-    expect(Paradox.and(True).value.has(false)).toBe(true);
+  // Boolean operations work the same.
+  console.log(...True.and(False).value.values());       // false
+  console.log(...True.or (False).value.values());       // true
+  console.log(...True.not().value.values());            // false
+  // See unit tests for complete truth table.
 
-    expect(True.and(Empty).value.size).toBe(0);
-    expect(Empty.and(True).value.size).toBe(0);
+  // Paradox is "both true and false".
+  // Empty is "neither true nor false".
+  console.log(...Paradox.or (Empty).value.values());    // true false
+  console.log(...Paradox.and(Empty).value.values());    //
+  // See unit tests for complete truth table.
+
+  // Ineffable is "none of the above", "inapplicable".
+  console.log(...Ineffable.and(True).value.values());   // NaN
+  console.log(...Ineffable.or(Paradox).value.values()); // NaN
+  console.log(...Ineffable.and(Empty).value.values());  // NaN
+  // See unit tests for complete truth table.
+
 ```
 
 ----
