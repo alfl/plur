@@ -16,6 +16,12 @@ Not yet published to npm. Placeholder.
 npm install --production --save plur
 ```
 
+## Run Tests
+
+```bash
+jasmine
+```
+
 ## Usage
 
 Other versions coming. For now use require. The unit tests full exercise the library.
