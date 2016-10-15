@@ -15,6 +15,12 @@ module.exports = function plur() {
 
       value: _value,
 
+      // Convenience function for accessing values.
+      iter: function() {
+        // TODO: Validate this.value.
+        return this.value.values();
+      },
+
       and: function(_operand) {
              // TODO: Validate _operand.
              var result = new Set();
