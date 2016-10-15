@@ -1,8 +1,5 @@
-// test/plurSpec.js
 var tap = require('tap')
 var plur = require('../src/plur.js')
-
-tap.pass('The test framework works.')
 
 var True = plur.True()
 var False = plur.False()
@@ -11,371 +8,166 @@ var Empty = plur.Empty()
 var Cipher = plur.Cipher()
 var Ineffable = plur.Ineffable()
 
-tap.equal(True.value.size, 1, 'Truth value set is of size 1.')
-tap.equal(True.value.has(true), true, 'Truth value set contains true.')
-
-tap.equal(False.value.size, 1, 'False value set is of size 1.')
-tap.equal(False.value.has(false), true, 'False value set contains false.')
-
-tap.equal(Paradox.value.size, 2, 'Paradox value set is of size 2.')
-tap.equal(Paradox.value.has(true), true, 'Paradox value set contains true.')
-tap.equal(Paradox.value.has(false), true, 'Paradox value set contains false.')
-
-tap.equal(Empty.value.size, 0, 'Empty value set is of size 0.')
-
-tap.equal(Cipher.value.size, 1, 'Cipher value set is of size 1.')
-tap.equal(Cipher.value.has(0), true, 'Cipher value set contains zero.')
-
-tap.equal(Ineffable.value.size, 1, 'Ineffable value set is of size 1.')
-tap.equal(Ineffable.value.has(NaN), true, 'Ineffable value set contains NaN.')
-
-/*
-  it('can validate the value Empty', function () {
-    var Empty = plur.Empty()
-    expect(Empty).not.toBe(undefined)
-    expect(Empty).not.toBe(null)
-    expect(Empty.value.size).toBe(0)
-  })
-
-  it('can validate the value Cipher', function () {
-    var Cipher = plur.Cipher()
-    expect(Cipher).not.toBe(undefined)
-    expect(Cipher).not.toBe(null)
-    expect(Cipher.value.size).toBe(1)
-    expect(Cipher.value.has(0)).toBe(true)
-  })
-
-  it('can validate the value Ineffable', function () {
-    var Ineffable = plur.Ineffable()
-    expect(Ineffable).not.toBe(undefined)
-    expect(Ineffable).not.toBe(null)
-    expect(Ineffable.value.size).toBe(1)
-
-    // This is also a test of how the underlying implementation
-    // handles NaN tests. Traditionally NaN != NaN.
-    expect(Ineffable.value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against TRUE', function () {
-    var True = plur.True()
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(True.and(True).value.size).toBe(1)
-    expect(True.and(True).value.has(true)).toBe(true)
-
-    expect(True.and(False).value.size).toBe(1)
-    expect(True.and(False).value.has(false)).toBe(true)
-    expect(False.and(True).value.size).toBe(1)
-    expect(False.and(True).value.has(false)).toBe(true)
-
-    expect(True.and(Paradox).value.size).toBe(2)
-    expect(True.and(Paradox).value.has(true)).toBe(true)
-    expect(True.and(Paradox).value.has(false)).toBe(true)
-    expect(Paradox.and(True).value.size).toBe(2)
-    expect(Paradox.and(True).value.has(true)).toBe(true)
-    expect(Paradox.and(True).value.has(false)).toBe(true)
-
-    expect(True.and(Empty).value.size).toBe(0)
-    expect(Empty.and(True).value.size).toBe(0)
-
-    expect(True.and(Cipher).value.size).toBe(1)
-    expect(True.and(Cipher).value.has(false)).toBe(true)
-    expect(Cipher.and(True).value.size).toBe(1)
-    expect(Cipher.and(True).value.has(false)).toBe(true)
-
-    expect(True.and(Ineffable).value.size).toBe(1)
-    expect(True.and(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.and(True).value.size).toBe(1)
-    expect(Ineffable.and(True).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against TRUE', function () {
-    var True = plur.True()
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(True.or(True).value.size).toBe(1)
-    expect(True.or(True).value.has(true)).toBe(true)
-
-    expect(True.or(False).value.size).toBe(1)
-    expect(True.or(False).value.has(true)).toBe(true)
-    expect(False.or(True).value.size).toBe(1)
-    expect(False.or(True).value.has(true)).toBe(true)
-
-    expect(True.or(Paradox).value.size).toBe(1)
-    expect(True.or(Paradox).value.has(true)).toBe(true)
-    expect(Paradox.or(True).value.size).toBe(1)
-    expect(Paradox.or(True).value.has(true)).toBe(true)
-
-    expect(True.or(Empty).value.size).toBe(1)
-    expect(True.or(Empty).value.has(true)).toBe(true)
-    expect(Empty.or(True).value.size).toBe(1)
-    expect(Empty.or(True).value.has(true)).toBe(true)
-
-    expect(True.or(Cipher).value.size).toBe(1)
-    expect(True.or(Cipher).value.has(true)).toBe(true)
-    expect(Cipher.or(True).value.size).toBe(1)
-    expect(Cipher.or(True).value.has(true)).toBe(true)
-
-    expect(True.or(Ineffable).value.size).toBe(1)
-    expect(True.or(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.or(True).value.size).toBe(1)
-    expect(Ineffable.or(True).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against FALSE', function () {
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(False.and(False).value.size).toBe(1)
-    expect(False.and(False).value.has(false)).toBe(true)
-
-    expect(False.and(Paradox).value.size).toBe(1)
-    expect(False.and(Paradox).value.has(false)).toBe(true)
-    expect(Paradox.and(False).value.size).toBe(1)
-    expect(Paradox.and(False).value.has(false)).toBe(true)
-
-    expect(False.and(Empty).value.size).toBe(0)
-    expect(Empty.and(False).value.size).toBe(0)
-
-    expect(False.and(Cipher).value.size).toBe(1)
-    expect(False.and(Cipher).value.has(false)).toBe(true)
-    expect(Cipher.and(False).value.size).toBe(1)
-    expect(Cipher.and(False).value.has(false)).toBe(true)
-
-    expect(False.and(Ineffable).value.size).toBe(1)
-    expect(False.and(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.and(False).value.size).toBe(1)
-    expect(Ineffable.and(False).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against FALSE', function () {
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(False.or(False).value.size).toBe(1)
-    expect(False.or(False).value.has(false)).toBe(true)
-
-    expect(False.or(Paradox).value.size).toBe(2)
-    expect(False.or(Paradox).value.has(true)).toBe(true)
-    expect(False.or(Paradox).value.has(false)).toBe(true)
-    expect(Paradox.or(False).value.size).toBe(2)
-    expect(Paradox.or(False).value.has(true)).toBe(true)
-    expect(Paradox.or(False).value.has(false)).toBe(true)
-
-    expect(False.or(Empty).value.size).toBe(1)
-    expect(False.or(Empty).value.has(false)).toBe(true)
-    expect(Empty.or(False).value.size).toBe(1)
-    expect(Empty.or(False).value.has(false)).toBe(true)
-
-    expect(False.or(Cipher).value.size).toBe(1)
-    expect(False.or(Cipher).value.has(false)).toBe(true)
-    expect(Cipher.or(False).value.size).toBe(1)
-    expect(Cipher.or(False).value.has(false)).toBe(true)
-
-    expect(False.or(Ineffable).value.size).toBe(1)
-    expect(False.or(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.or(False).value.size).toBe(1)
-    expect(Ineffable.or(False).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against PARADOX', function () {
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Paradox.and(Paradox).value.size).toBe(2)
-    expect(Paradox.and(Paradox).value.has(true)).toBe(true)
-    expect(Paradox.and(Paradox).value.has(false)).toBe(true)
-
-    expect(Paradox.and(Empty).value.size).toBe(0)
-    expect(Empty.and(Paradox).value.size).toBe(0)
-
-    expect(Paradox.and(Cipher).value.size).toBe(1)
-    expect(Paradox.and(Cipher).value.has(false)).toBe(true)
-    expect(Cipher.and(Paradox).value.size).toBe(1)
-    expect(Cipher.and(Paradox).value.has(false)).toBe(true)
-
-    expect(Paradox.and(Ineffable).value.size).toBe(1)
-    expect(Paradox.and(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.and(Paradox).value.size).toBe(1)
-    expect(Ineffable.and(Paradox).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against PARADOX', function () {
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Paradox.or(Paradox).value.size).toBe(2)
-    expect(Paradox.or(Paradox).value.has(true)).toBe(true)
-    expect(Paradox.or(Paradox).value.has(false)).toBe(true)
-
-    expect(Paradox.or(Empty).value.size).toBe(2)
-    expect(Paradox.or(Empty).value.has(true)).toBe(true)
-    expect(Paradox.or(Empty).value.has(false)).toBe(true)
-    expect(Empty.or(Paradox).value.size).toBe(2)
-    expect(Empty.or(Paradox).value.has(true)).toBe(true)
-    expect(Empty.or(Paradox).value.has(false)).toBe(true)
-
-    expect(Paradox.or(Cipher).value.size).toBe(2)
-    expect(Paradox.or(Cipher).value.has(true)).toBe(true)
-    expect(Paradox.or(Cipher).value.has(false)).toBe(true)
-    expect(Cipher.or(Paradox).value.size).toBe(2)
-    expect(Cipher.or(Paradox).value.has(true)).toBe(true)
-    expect(Cipher.or(Paradox).value.has(false)).toBe(true)
-
-    expect(Paradox.or(Ineffable).value.size).toBe(1)
-    expect(Paradox.or(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.or(Paradox).value.size).toBe(1)
-    expect(Ineffable.or(Paradox).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against EMPTY', function () {
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Empty.and(Empty).value.size).toBe(0)
-
-    expect(Empty.and(Cipher).value.size).toBe(0)
-    expect(Cipher.and(Empty).value.size).toBe(0)
-
-    expect(Empty.and(Ineffable).value.size).toBe(1)
-    expect(Empty.and(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.and(Empty).value.size).toBe(1)
-    expect(Ineffable.and(Empty).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against EMPTY', function () {
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Empty.or(Empty).value.size).toBe(0)
-
-    expect(Empty.or(Cipher).value.size).toBe(1)
-    expect(Empty.or(Cipher).value.has(0)).toBe(true)
-    expect(Cipher.or(Empty).value.size).toBe(1)
-    expect(Cipher.or(Empty).value.has(0)).toBe(true)
-
-    expect(Empty.or(Ineffable).value.size).toBe(1)
-    expect(Empty.or(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.or(Empty).value.size).toBe(1)
-    expect(Ineffable.or(Empty).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against CIPHER', function () {
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Cipher.and(Cipher).value.size).toBe(1)
-    expect(Cipher.and(Cipher).value.has(0)).toBe(true)
-
-    expect(Cipher.and(Ineffable).value.size).toBe(1)
-    expect(Cipher.and(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.and(Cipher).value.size).toBe(1)
-    expect(Ineffable.and(Cipher).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against CIPHER', function () {
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(Cipher.or(Cipher).value.size).toBe(1)
-    expect(Cipher.or(Cipher).value.has(0)).toBe(true)
-    expect(Cipher.or(Cipher).value.size).toBe(1)
-    expect(Cipher.or(Cipher).value.has(0)).toBe(true)
-
-    expect(Cipher.or(Ineffable).value.size).toBe(1)
-    expect(Cipher.or(Ineffable).value.has(NaN)).toBe(true)
-    expect(Ineffable.or(Cipher).value.size).toBe(1)
-    expect(Ineffable.or(Cipher).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate AND operations against INEFFABLE', function () {
-    var Ineffable = plur.Ineffable()
-
-    expect(Ineffable.and(Ineffable).value.size).toBe(1)
-    expect(Ineffable.and(Ineffable).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate OR operations against INEFFABLE', function () {
-    var Ineffable = plur.Ineffable()
-
-    expect(Ineffable.or(Ineffable).value.size).toBe(1)
-    expect(Ineffable.or(Ineffable).value.has(NaN)).toBe(true)
-  })
-
-  it('can validate NOT operations', function () {
-    var True = plur.True()
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(True.not().value.size).toBe(1)
-    expect(True.not().value.has(false)).toBe(true)
-
-    expect(False.not().value.size).toBe(1)
-    expect(False.not().value.has(true)).toBe(true)
-
-    // TODO: Check if !Paradox == Empty.
-    expect(Paradox.not().value.size).toBe(0)
-
-    // TODO: Check if !Empty == Paradox.
-    expect(Empty.not().value.size).toBe(2)
-    expect(Empty.not().value.has(true)).toBe(true)
-    expect(Empty.not().value.has(false)).toBe(true)
-
-    expect(Cipher.not().value.size).toBe(1)
-    expect(Cipher.not().value.has(true)).toBe(true)
-
-    expect(Ineffable.not().value.size).toBe(1)
-    expect(Ineffable.not().value.has(NaN)).toBe(true)
-  })
-
-  it('can validate IS operations', function () {
-    var True = plur.True()
-    var False = plur.False()
-    var Paradox = plur.Paradox()
-    var Empty = plur.Empty()
-    var Cipher = plur.Cipher()
-    var Ineffable = plur.Ineffable()
-
-    expect(True.is(True)).toBe(true)
-    expect(True.not().is(True)).toBe(false)
-
-    expect(False.is(False)).toBe(true)
-    expect(False.not().is(False)).toBe(false)
-
-    expect(Paradox.is(Paradox)).toBe(true)
-    expect(Paradox.not().is(Paradox)).toBe(false)
-
-    expect(Empty.is(Empty)).toBe(true)
-    expect(Empty.not().is(Empty)).toBe(false)
-
-    expect(Cipher.is(Cipher)).toBe(true)
-    expect(Cipher.not().is(Cipher)).toBe(false)
-
-    // The Ineffable is not Ineffable.
-    expect(Ineffable.is(Ineffable)).toBe(true)
-    expect(Ineffable.not().is(Ineffable)).toBe(true)
-  })
-*/
+tap.test('Verify structure of values', function (t) {
+  t.equal(True.value.size, 1, 'Truth value set is of size 1.')
+  t.ok(True.value.has(true), 'Truth value set contains true.')
+  t.pass(...True.iter())
+
+  t.equal(False.value.size, 1, 'False value set is of size 1.')
+  t.ok(False.value.has(false), 'False value set contains false.')
+
+  t.equal(Paradox.value.size, 2, 'Paradox value set is of size 2.')
+  t.ok(Paradox.value.has(true), 'Paradox value set contains true.')
+  t.ok(Paradox.value.has(false), 'Paradox value set contains false.')
+
+  t.equal(Empty.value.size, 0, 'Empty value set is of size 0.')
+
+  t.equal(Cipher.value.size, 1, 'Cipher value set is of size 1.')
+  t.ok(Cipher.value.has(0), 'Cipher value set contains zero.')
+
+  t.equal(Ineffable.value.size, 1, 'Ineffable value set is of size 1.')
+  t.ok(Ineffable.value.has(NaN), 'Ineffable value set contains NaN.')
+
+  t.end()
+})
+
+tap.test('Verify IS comparisons', function (t) {
+  t.ok(True.is(True), 'True is True')
+  t.ok(False.is(False), 'False is False')
+  t.ok(Paradox.is(Paradox), 'Paradox is Paradox')
+  t.ok(Empty.is(Empty), 'Empty is Empty')
+  t.ok(Cipher.is(Cipher), 'Cipher is Cipher')
+  t.ok(Ineffable.is(Ineffable), 'Ineffable is Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against TRUE', function (t) {
+  t.ok(True.and(True).is(True), 'True AND True IS True')
+  t.ok(True.and(False).is(False), 'True AND False IS False')
+  t.ok(False.and(True).is(False), 'False AND True IS False')
+  t.ok(True.and(Paradox).is(Paradox), 'True AND Paradox IS Paradox')
+  t.ok(Paradox.and(True).is(Paradox), 'Paradox AND True IS Paradox')
+  t.ok(True.and(Empty).is(Empty), 'True AND Empty IS Empty')
+  t.ok(Empty.and(True).is(Empty), 'Empty AND True IS Empty')
+  t.ok(True.and(Cipher).is(False), 'True AND Cipher IS False')
+  t.ok(Cipher.and(True).is(False), 'Cipher AND True IS False')
+  t.ok(True.and(Ineffable).is(Ineffable), 'True AND Ineffable IS Ineffable')
+  t.ok(Ineffable.and(True).is(Ineffable), 'Ineffable AND True IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against TRUE', function (t) {
+  t.ok(True.or(True).is(True), 'True OR True IS True')
+  t.ok(True.or(False).is(True), 'True OR False IS True')
+  t.ok(False.or(True).is(True), 'False OR True IS True')
+  t.ok(True.or(Paradox).is(True), 'True OR Paradox IS True')
+  t.ok(Paradox.or(True).is(True), 'Paradox OR True IS True')
+  t.ok(True.or(Empty).is(True), 'True OR Empty IS True')
+  t.ok(Empty.or(True).is(True), 'Empty OR True IS True')
+  t.ok(True.or(Cipher).is(True), 'True OR Cipher IS True')
+  t.ok(Cipher.or(True).is(True), 'Cipher OR True IS True')
+  t.ok(True.or(Ineffable).is(Ineffable), 'True OR Ineffable IS Ineffable')
+  t.ok(Ineffable.or(True).is(Ineffable), 'Ineffable OR True IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against FALSE', function (t) {
+  t.ok(False.and(False).is(False), 'False AND False IS False')
+  t.ok(False.and(Paradox).is(False), 'False AND Paradox IS False')
+  t.ok(Paradox.and(False).is(False), 'Paradox AND False IS False')
+  t.ok(False.and(Empty).is(Empty), 'False AND Empty IS Empty')
+  t.ok(Empty.and(False).is(Empty), 'Empty AND False IS Empty')
+  t.ok(False.and(Cipher).is(False), 'False AND Cipher IS False')
+  t.ok(Cipher.and(False).is(False), 'Cipher AND False IS False')
+  t.ok(False.and(Ineffable).is(Ineffable), 'False AND Ineffable IS Ineffable')
+  t.ok(Ineffable.and(False).is(Ineffable), 'Ineffable AND False IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against FALSE', function (t) {
+  t.ok(False.or(False).is(False), 'False OR False IS False')
+  t.ok(False.or(Paradox).is(Paradox), 'False OR Paradox IS Paradox')
+  t.ok(Paradox.or(False).is(Paradox), 'Paradox OR False IS Paradox')
+  t.ok(False.or(Empty).is(False), 'False OR Empty IS False')
+  t.ok(Empty.or(False).is(False), 'Empty OR False IS False')
+  t.ok(False.or(Cipher).is(False), 'False OR Cipher IS False')
+  t.ok(Cipher.or(False).is(False), 'Cipher OR False IS False')
+  t.ok(False.or(Ineffable).is(Ineffable), 'False OR Ineffable IS Ineffable')
+  t.ok(Ineffable.or(False).is(Ineffable), 'Ineffable OR False IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against PARADOX', function (t) {
+  t.ok(Paradox.and(Paradox).is(Paradox), 'Paradox AND Paradox IS Paradox')
+  t.ok(Paradox.and(Empty).is(Empty), 'Paradox AND Empty IS Empty')
+  t.ok(Empty.and(Paradox).is(Empty), 'Empty AND Paradox IS Empty')
+  t.ok(Paradox.and(Cipher).is(False), 'Paradox AND Cipher IS False')
+  t.ok(Cipher.and(Paradox).is(False), 'Cipher AND Paradox IS False')
+  t.ok(Paradox.and(Ineffable).is(Ineffable), 'Paradox AND Ineffable IS Ineffable')
+  t.ok(Ineffable.and(Paradox).is(Ineffable), 'Ineffable AND Paradox IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against PARADOX', function (t) {
+  t.ok(Paradox.or(Paradox).is(Paradox), 'Paradox OR Paradox IS Paradox')
+  t.ok(Paradox.or(Empty).is(Paradox), 'Paradox OR Empty IS Paradox')
+  t.ok(Empty.or(Paradox).is(Paradox), 'Empty OR Paradox IS Paradox')
+  t.ok(Paradox.or(Cipher).is(Paradox), 'Paradox OR Cipher IS Paradox')
+  t.ok(Cipher.or(Paradox).is(Paradox), 'Cipher OR Paradox IS Paradox')
+  t.ok(Paradox.or(Ineffable).is(Ineffable), 'Paradox OR Ineffable IS Ineffable')
+  t.ok(Ineffable.or(Paradox).is(Ineffable), 'Ineffable OR Paradox IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against EMPTY', function (t) {
+  t.ok(Empty.and(Empty).is(Empty), 'Empty AND Empty IS Empty')
+  t.ok(Empty.and(Cipher).is(Empty), 'Empty AND Cipher IS Empty')
+  t.ok(Cipher.and(Empty).is(Empty), 'Cipher AND Empty IS Empty')
+  t.ok(Empty.and(Ineffable).is(Ineffable), 'Empty AND Ineffable IS Ineffable')
+  t.ok(Ineffable.and(Empty).is(Ineffable), 'Ineffable AND Empty IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against EMPTY', function (t) {
+  t.ok(Empty.or(Empty).is(Empty), 'Empty OR Empty IS Empty')
+  t.ok(Empty.or(Cipher).is(Cipher), 'Empty OR Cipher IS Cipher')
+  t.ok(Cipher.or(Empty).is(Cipher), 'Cipher OR Empty IS Cipher')
+  t.ok(Empty.or(Ineffable).is(Ineffable), 'Empty OR Ineffable IS Ineffable')
+  t.ok(Ineffable.or(Empty).is(Ineffable), 'Ineffable OR Empty IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against CIPHER', function (t) {
+  t.ok(Cipher.and(Cipher).is(Cipher), 'Cipher AND Cipher IS Cipher')
+  t.ok(Ineffable.and(Cipher).is(Ineffable), 'Ineffable AND Cipher IS Ineffable')
+  t.ok(Cipher.and(Ineffable).is(Ineffable), 'Cipher AND Ineffable IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against CIPHER', function (t) {
+  t.ok(Cipher.or(Cipher).is(Cipher), 'Cipher OR Cipher IS Cipher')
+  t.ok(Ineffable.or(Cipher).is(Ineffable), 'Ineffable OR Cipher Is Ineffable')
+  t.ok(Cipher.or(Ineffable).is(Ineffable), 'Cipher OR Ineffable Is Ineffable')
+  t.end()
+})
+
+tap.test('Verify AND operations against INEFFABLE', function (t) {
+  t.ok(Ineffable.and(Ineffable).is(Ineffable), 'Ineffable AND Ineffable IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify OR operations against INEFFABLE', function (t) {
+  t.ok(Ineffable.or(Ineffable).is(Ineffable), 'Ineffable OR Ineffable IS Ineffable')
+  t.end()
+})
+
+tap.test('Verify NOT operations', function (t) {
+  t.ok(True.not().is(False), 'Not True Is False')
+  t.ok(False.not().is(True), 'Not False Is True')
+  t.ok(Paradox.not().is(Empty), 'Not Paradox Is Empty')
+  t.ok(Empty.not().is(Paradox), 'Not Empty Is Paradox')
+  t.ok(Cipher.not().is(True), 'Not Cipher Is True')
+  t.ok(Ineffable.not().is(Ineffable), 'Not Ineffable Is Ineffable')
+  t.end()
+})
+
