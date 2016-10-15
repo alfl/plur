@@ -36,7 +36,8 @@
   },
   "standard": {
     "ignore": [
-      "lib/**"
+      "lib/**",
+      "spec/**"
     ]
   },
   "echint": {
