@@ -36,33 +36,33 @@ Other versions coming. For now use require. The unit tests full exercise the lib
   var Empty     = plur.Empty();
   var Ineffable = plur.Ineffable();
 
-  console.log(...True.value.values());                  // true
-  console.log(...False.value.values());                 // false
-  console.log(...Paradox.value.values());               // true false
-  console.log(...Empty.value.values());                 //
-  console.log(...Ineffable.value.values());             // NaN
+  console.log(...True.iter());                  // true
+  console.log(...False.iter());                 // false
+  console.log(...Paradox.iter());               // true false
+  console.log(...Empty.iter());                 //
+  console.log(...Ineffable.iter());             // NaN
 
   // Test equality with "is". TODO: Better chaining. Currently this
   // leads to unfortunate constructions such as "True.not().is(False)".
-  console.log(Paradox.is(Paradox));                     // true
-  console.log(Paradox.not().is(Paradox));               // false
+  console.log(Paradox.is(Paradox));             // true
+  console.log(Paradox.not().is(Paradox));       // false
 
   // Boolean operations work the same.
-  console.log(...True.and(False).value.values());       // false
-  console.log(...True.or (False).value.values());       // true
-  console.log(...True.not().value.values());            // false
+  console.log(...True.and(False).iter());       // false
+  console.log(...True.or (False).iter());       // true
+  console.log(...True.not().iter());            // false
   // See unit tests for complete truth table.
 
   // Paradox is "both true and false".
   // Empty is "neither true nor false".
-  console.log(...Paradox.or (Empty).value.values());    // true false
-  console.log(...Paradox.and(Empty).value.values());    //
+  console.log(...Paradox.or (Empty).iter());    // true false
+  console.log(...Paradox.and(Empty).iter());    //
   // See unit tests for complete truth table.
 
   // Ineffable is "none of the above", "inapplicable".
-  console.log(...Ineffable.and(True).value.values());   // NaN
-  console.log(...Ineffable.or(Paradox).value.values()); // NaN
-  console.log(...Ineffable.and(Empty).value.values());  // NaN
+  console.log(...Ineffable.and(True).iter());   // NaN
+  console.log(...Ineffable.or(Paradox).iter()); // NaN
+  console.log(...Ineffable.and(Empty).iter());  // NaN
   // See unit tests for complete truth table.
 
 ```
